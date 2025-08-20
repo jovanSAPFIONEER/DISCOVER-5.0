@@ -1,0 +1,47 @@
+name: Reproduce (fast)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ubuntu-fast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install system deps
+        run: sudo apt-get update && sudo apt-get install -y python3-venv
+      - name: Run fast bootstrap (0.0,0.2; repeats=3)
+        env:
+          REWIRES: 0.0,0.2
+          REPEATS: 3
+          B_BUDGET: 1000
+          R_BUDGET: 4000
+          BOOTS: 120
+        run: |
+          bash scripts/bootstrap_repro.sh
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: outputs-ubuntu
+          path: outputs/**
+
+  windows-fast:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run fast bootstrap (0.0,0.2; repeats=3)
+        shell: powershell
+        env:
+          REWIRES: 0.0,0.2
+          REPEATS: 3
+          B_BUDGET: 1000
+          R_BUDGET: 4000
+          BOOTS: 120
+        run: |
+          powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap_repro.ps1
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: outputs-windows
+          path: outputs/**
