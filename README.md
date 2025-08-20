@@ -82,15 +82,15 @@ Citation: see `CITATION.cff` or https://doi.org/10.5281/zenodo.16912657. Zenodo 
 
 If you use this reproduction kit or its outputs, please cite:
 
-DISCOVER 5.0 — Reproduction Kit for Causal Rewire Recovery (SOA‑1). Version v0.1.1. DOI: https://doi.org/10.5281/zenodo.16912657
+DISCOVER 5.0 — Reproduction Kit for Causal Rewire Recovery (SOA‑1). Version v0.1.2. DOI: https://doi.org/10.5281/zenodo.16912657
 
 BibTeX (example):
 
-@software{discover5_repro_0_1_1,
+@software{discover5_repro_0_1_2,
 	title        = {DISCOVER 5.0 — Reproduction Kit for Causal Rewire Recovery (SOA-1)},
 	author       = {Jovan},
 	year         = {2025},
-	version      = {v0.1.1},
+	version      = {v0.1.2},
 	doi          = {10.5281/zenodo.16912657},
 	url          = {https://github.com/jovanSAPFIONEER/DISCOVER-5.0}
 }
