@@ -38,5 +38,25 @@ docker run --rm -it -v "$PWD/outputs:/app/outputs" discover5
 
 ---
 
+## Sanity check (fast mode)
+Use environment overrides to run a quick subset suitable for CI/tryouts:
+
+Windows PowerShell:
+```powershell
+$env:REWIRES='0.0,0.2'; $env:REPEATS='3'; $env:B_BUDGET='1000'; $env:R_BUDGET='4000'; $env:BOOTS='120'
+powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap_repro.ps1
+```
+
+Linux/macOS:
+```bash
+REWIRES='0.0,0.2' REPEATS='3' B_BUDGET='1000' R_BUDGET='4000' BOOTS='120' bash scripts/bootstrap_repro.sh
+```
+
+Expected directional outcomes (fast mode may be noisy):
+- SOA‑1 mean AUC rises from ~0.50 at rewire 0.0 toward ~0.64–0.66 at 0.2.
+- Paired ΔAUC (0.2 − 0.0) positive; permutation p typically < 0.05 on full run.
+
+---
+
 License: MIT (inherits from the upstream code).  
 Contact: jovanSAPFIONEER

@@ -1,0 +1,42 @@
+name: Release (manual)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run bootstrap fast
+        env:
+          REWIRES: 0.0,0.2
+          REPEATS: 3
+          B_BUDGET: 1000
+          R_BUDGET: 4000
+          BOOTS: 120
+        run: |
+          bash scripts/bootstrap_repro.sh
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: outputs
+          path: outputs/**
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.0
+          name: "DISCOVER-5.0 Repro Kit v0.1.0"
+          body: |
+            One-command reproduction of causal rewire recovery (SOA-1).
+            Includes combined panel and CSVs.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.0
+          files: |
+            outputs/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
