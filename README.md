@@ -1,6 +1,6 @@
 # DISCOVER 5.0 — Reproduction Kit
 
-![CI (fast)](https://github.com/jovanSAPFIONEER/DISCOVER-5.0/actions/workflows/repro.yml/badge.svg) [![Releases](https://img.shields.io/github/v/release/jovanSAPFIONEER/DISCOVER-5.0)](https://github.com/jovanSAPFIONEER/DISCOVER-5.0/releases)
+![CI (fast)](https://github.com/jovanSAPFIONEER/DISCOVER-5.0/actions/workflows/repro.yml/badge.svg) [![Releases](https://img.shields.io/github/v/release/jovanSAPFIONEER/DISCOVER-5.0)](https://github.com/jovanSAPFIONEER/DISCOVER-5.0/releases) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16912657.svg)](https://doi.org/10.5281/zenodo.16912657)
 
 A minimal, one-command reproduction kit for the DISCOVER/Orion causal rewire result:
 “Lesioning long‑range connectivity eliminates the early access (SOA‑1) signal; restoring it recovers the signal in a graded way.”
@@ -66,7 +66,7 @@ git tag v0.1.0
 git push origin v0.1.0
 ```
 
-Citation: see `CITATION.cff`. Zenodo metadata is prepared in `.zenodo.json` (enable Zenodo on the repo to mint a DOI).
+Citation: see `CITATION.cff` or https://doi.org/10.5281/zenodo.16912657. Zenodo metadata is in `.zenodo.json`.
 
 ---
 

@@ -8,8 +8,8 @@ authors:
 license: MIT
 repository-code: https://github.com/jovanSAPFIONEER/DISCOVER-5.0
 date-released: 2025-08-20
-version: 0.1.0
-doi: null
+version: 0.1.1
+doi: 10.5281/zenodo.16912657
 keywords:
   - reproducibility
   - consciousness modeling
