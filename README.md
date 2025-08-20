@@ -70,5 +70,13 @@ Citation: see `CITATION.cff`. Zenodo metadata is prepared in `.zenodo.json` (ena
 
 ---
 
+## Interpreting the figures
+
+- `soa1_auc_mean_vs_rewire.(csv|png)`: Mean SOA‑1 AUC vs rewire probability. Expect near‑chance at 0.0 (long‑range lesion) and recovery peaking around 0.2. Error bars reflect across‑repeat variability.
+- `paired_deltas.(csv|plot)`: Per‑repeat paired ΔAUC relative to the lesion baseline (0.0). Positive deltas indicate recovery; permutation p‑values quantify significance at each rewire level.
+- Takeaway: The early access (SOA‑1) signal depends on long‑range connectivity—removing it collapses the signal, partially restoring it revives the signal in a graded way.
+
+---
+
 License: MIT (inherits from the upstream code).  
 Contact: jovanSAPFIONEER
