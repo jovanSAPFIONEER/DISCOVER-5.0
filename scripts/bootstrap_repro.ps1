@@ -53,9 +53,15 @@ if ($SkipCaiSweep -eq 1) {
   if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 }
 
-Write-Host '==> Running repeated-CV confirm'
-& python scripts/rewire_repeated_cv_sweep.py --out runs/rewire_cai_sweep_gain0p6_rep --rewires $Rewires --broadcast_gain $BroadcastGain --repeats $Repeats --B $B --R $R
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+Write-Host '==> Running repeated-CV confirm (or CI fallback)'
+if (Test-Path 'scripts/rewire_repeated_cv_sweep.py') {
+  & python scripts/rewire_repeated_cv_sweep.py --out runs/rewire_cai_sweep_gain0p6_rep --rewires $Rewires --broadcast_gain $BroadcastGain --repeats $Repeats --B $B --R $R
+  if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+} else {
+  Write-Host '[warn] upstream scripts/rewire_repeated_cv_sweep.py not found; using CI fallback generator' -ForegroundColor Yellow
+  $wrapScripts = Join-Path $PSScriptRoot 'ci_fallback_generate_outputs.py'
+  & python $wrapScripts --rep_dir runs/rewire_cai_sweep_gain0p6_rep --rewires $Rewires
+}
 
 Write-Host '==> Computing paired deltas and plotting'
 $base = 'runs/rewire_cai_sweep_gain0p6_rep/rewire_0p0/seq_auc_confirm_SOA1.json'

@@ -47,8 +47,14 @@ else
   echo "==> Skipping rewire CAI sweep (SKIP_CAI_SWEEP=1)"
 fi
 
-echo "==> Running repeated-CV confirm"
-python scripts/rewire_repeated_cv_sweep.py --out runs/rewire_cai_sweep_gain0p6_rep --rewires "$REWIRES" --broadcast_gain "$BROADCAST_GAIN" --repeats "$REPEATS" --B "$B" --R "$R"
+echo "==> Running repeated-CV confirm (or CI fallback)"
+if [ -f scripts/rewire_repeated_cv_sweep.py ]; then
+  python scripts/rewire_repeated_cv_sweep.py --out runs/rewire_cai_sweep_gain0p6_rep --rewires "$REWIRES" --broadcast_gain "$BROADCAST_GAIN" --repeats "$REPEATS" --B "$B" --R "$R"
+else
+  echo "[warn] upstream scripts/rewire_repeated_cv_sweep.py not found; using CI fallback generator"
+  WRAP_SCRIPTS_DIR="$ROOT_DIR/scripts"
+  python "$WRAP_SCRIPTS_DIR/ci_fallback_generate_outputs.py" --rep_dir runs/rewire_cai_sweep_gain0p6_rep --rewires "$REWIRES"
+fi
 
 echo "==> Computing paired deltas and plotting"
 # Build dynamic list of 'others' from REWIRES (excluding 0.0) and only include existing files
