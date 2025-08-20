@@ -74,13 +74,11 @@ try {
 # 4) Copy outputs back into wrapper repo
 Write-Host '==> Exporting key outputs'
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
-Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.csv $OutDir
-Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.png $OutDir
-Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv $OutDir
-Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.png $OutDir
-Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.pdf $OutDir
-if (Test-Path runs/rewire_cai_sweep_gain0p6_rep/combined_rewire_panel.png) {
-  Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/combined_rewire_panel.png $OutDir
-}
+if (Test-Path runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.csv) { Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.csv $OutDir }
+if (Test-Path runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.png) { Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.png $OutDir }
+if (Test-Path runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv) { Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv $OutDir }
+if (Test-Path runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.png) { Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.png $OutDir }
+if (Test-Path runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.pdf) { Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.pdf $OutDir }
+if (Test-Path runs/rewire_cai_sweep_gain0p6_rep/combined_rewire_panel.png) { Copy-Item -Force runs/rewire_cai_sweep_gain0p6_rep/combined_rewire_panel.png $OutDir }
 
 Write-Host "==> Done. See $OutDir for outputs."

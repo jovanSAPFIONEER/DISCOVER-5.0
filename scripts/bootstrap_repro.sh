@@ -61,11 +61,11 @@ python "$CDIR_ORION/make_combined_panel.py" --rep_dir runs/rewire_cai_sweep_gain
 
 # 5) Export outputs
 mkdir -p "$OUT_DIR"
-cp runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.csv "$OUT_DIR" || true
-cp runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.png "$OUT_DIR" || true
-cp runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv "$OUT_DIR" || true
-cp runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.png "$OUT_DIR" || true
-cp runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.pdf "$OUT_DIR" || true
-cp runs/rewire_cai_sweep_gain0p6_rep/combined_rewire_panel.png "$OUT_DIR" || true
+[ -f runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.csv ] && cp runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.csv "$OUT_DIR" || true
+[ -f runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.png ] && cp runs/rewire_cai_sweep_gain0p6_rep/soa1_auc_mean_vs_rewire.png "$OUT_DIR" || true
+[ -f runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv ] && cp runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv "$OUT_DIR" || true
+[ -f runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.png ] && cp runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.png "$OUT_DIR" || true
+[ -f runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.pdf ] && cp runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.pdf "$OUT_DIR" || true
+[ -f runs/rewire_cai_sweep_gain0p6_rep/combined_rewire_panel.png ] && cp runs/rewire_cai_sweep_gain0p6_rep/combined_rewire_panel.png "$OUT_DIR" || true
 
 echo "==> Done. See $OUT_DIR for outputs."
