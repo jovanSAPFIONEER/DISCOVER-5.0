@@ -13,6 +13,7 @@ REPEATS="${REPEATS:-12}"
 B="${B_BUDGET:-3000}"
 R="${R_BUDGET:-8000}"
 BOOTS="${BOOTS:-300}"
+SKIP_CAI_SWEEP="${SKIP_CAI_SWEEP:-0}"
 
 # 1) Clone upstream if needed
 if [ ! -d "$CLONE_DIR" ]; then
@@ -32,13 +33,19 @@ if [ ! -d "$CLONE_DIR/.venv" ]; then
 fi
 # shellcheck source=/dev/null
 source "$CLONE_DIR/.venv/bin/activate"
+# Force headless plotting
+export MPLBACKEND=${MPLBACKEND:-Agg}
 python -m pip install --upgrade pip
 python -m pip install -r "$CLONE_DIR/requirements.txt"
 
 # 3) Run pipeline inside upstream repo
 cd "$CLONE_DIR"
-echo "==> Running rewire sweep (this can take a while)"
-python scripts/causal_rewire_sweep_cai.py --out runs/rewire_cai_sweep_gain0p6 --rewires "$REWIRES" --broadcast_gain "$BROADCAST_GAIN" --n_mask 60 --n_blink 40 --n_cb 32 --n_dual 40 --boots "$BOOTS"
+if [ "$SKIP_CAI_SWEEP" != "1" ]; then
+  echo "==> Running rewire sweep (this can take a while)"
+  python scripts/causal_rewire_sweep_cai.py --out runs/rewire_cai_sweep_gain0p6 --rewires "$REWIRES" --broadcast_gain "$BROADCAST_GAIN" --n_mask 60 --n_blink 40 --n_cb 32 --n_dual 40 --boots "$BOOTS"
+else
+  echo "==> Skipping rewire CAI sweep (SKIP_CAI_SWEEP=1)"
+fi
 
 echo "==> Running repeated-CV confirm"
 python scripts/rewire_repeated_cv_sweep.py --out runs/rewire_cai_sweep_gain0p6_rep --rewires "$REWIRES" --broadcast_gain "$BROADCAST_GAIN" --repeats "$REPEATS" --B "$B" --R "$R"

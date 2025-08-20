@@ -18,6 +18,8 @@ jobs:
           B_BUDGET: 1000
           R_BUDGET: 4000
           BOOTS: 120
+          SKIP_CAI_SWEEP: 1
+          MPLBACKEND: Agg
         run: |
           bash scripts/bootstrap_repro.sh
       - name: Upload outputs
@@ -38,6 +40,8 @@ jobs:
           B_BUDGET: 1000
           R_BUDGET: 4000
           BOOTS: 120
+          SKIP_CAI_SWEEP: 1
+          MPLBACKEND: Agg
         run: |
           powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap_repro.ps1
       - name: Upload outputs

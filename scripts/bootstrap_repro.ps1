@@ -16,6 +16,7 @@ $Repeats = if ($env:REPEATS) { [int]$env:REPEATS } else { 12 }
 $B = if ($env:B_BUDGET) { [int]$env:B_BUDGET } else { 3000 }
 $R = if ($env:R_BUDGET) { [int]$env:R_BUDGET } else { 8000 }
 $Boots = if ($env:BOOTS) { [int]$env:BOOTS } else { 300 }
+$SkipCaiSweep = if ($env:SKIP_CAI_SWEEP) { [int]$env:SKIP_CAI_SWEEP } else { 0 }
 
 # 1) Clone upstream if needed
 if (-not (Test-Path $CloneDir)) {
@@ -36,15 +37,21 @@ if (-not (Test-Path $py)) {
 }
 Write-Host '==> Activating venv'
 . (Join-Path $CloneDir '.venv/Scripts/Activate.ps1')
+# Force headless plotting
+$env:MPLBACKEND = if ($env:MPLBACKEND) { $env:MPLBACKEND } else { 'Agg' }
 Write-Host '==> Installing requirements'
 & python -m pip install --upgrade pip
 & python -m pip install -r (Join-Path $CloneDir 'requirements.txt')
 
 # 3) Run pipeline inside the upstream repo
 Set-Location $CloneDir
-Write-Host '==> Running rewire sweep (this can take a while)'
-& python scripts/causal_rewire_sweep_cai.py --out runs/rewire_cai_sweep_gain0p6 --rewires $Rewires --broadcast_gain $BroadcastGain --n_mask 60 --n_blink 40 --n_cb 32 --n_dual 40 --boots $Boots
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+if ($SkipCaiSweep -eq 1) {
+  Write-Host '==> Skipping rewire CAI sweep (SKIP_CAI_SWEEP=1)'
+} else {
+  Write-Host '==> Running rewire sweep (this can take a while)'
+  & python scripts/causal_rewire_sweep_cai.py --out runs/rewire_cai_sweep_gain0p6 --rewires $Rewires --broadcast_gain $BroadcastGain --n_mask 60 --n_blink 40 --n_cb 32 --n_dual 40 --boots $Boots
+  if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+}
 
 Write-Host '==> Running repeated-CV confirm'
 & python scripts/rewire_repeated_cv_sweep.py --out runs/rewire_cai_sweep_gain0p6_rep --rewires $Rewires --broadcast_gain $BroadcastGain --repeats $Repeats --B $B --R $R
