@@ -1,0 +1,23 @@
+{
+  "title": "DISCOVER 5.0 — Reproduction Kit for Causal Rewire Recovery (SOA-1)",
+  "upload_type": "software",
+  "description": "One-command, cross-platform reproduction kit for the causal rewire recovery result (SOA-1). Includes Windows PowerShell, Bash, and Docker workflows, pinned upstream commit, CI fast-mode, and combined recovery panel figure.",
+  "creators": [
+    {"name": "Jovan", "affiliation": "SAP Fioneer", "orcid": ""}
+  ],
+  "keywords": [
+    "reproducibility",
+    "global workspace",
+    "conscious access",
+    "small-world",
+    "causal inference"
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://github.com/jovanSAPFIONEER/DISCOVER-5.0"
+    }
+  ]
+}

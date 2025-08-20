@@ -58,5 +58,17 @@ Expected directional outcomes (fast mode may be noisy):
 
 ---
 
+## Releases and citation
+
+Create a tagged release (triggers release workflow and uploads outputs):
+```powershell
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Citation: see `CITATION.cff`. Zenodo metadata is prepared in `.zenodo.json` (enable Zenodo on the repo to mint a DOI).
+
+---
+
 License: MIT (inherits from the upstream code).  
 Contact: jovanSAPFIONEER
