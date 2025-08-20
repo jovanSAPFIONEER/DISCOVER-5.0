@@ -58,10 +58,24 @@ Write-Host '==> Running repeated-CV confirm'
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 Write-Host '==> Computing paired deltas and plotting'
-& python scripts/paired_rewire_delta.py --base runs/rewire_cai_sweep_gain0p6_rep/rewire_0p0/seq_auc_confirm_SOA1.json --others runs/rewire_cai_sweep_gain0p6_rep/rewire_0p1/seq_auc_confirm_SOA1.json runs/rewire_cai_sweep_gain0p6_rep/rewire_0p2/seq_auc_confirm_SOA1.json runs/rewire_cai_sweep_gain0p6_rep/rewire_0p3/seq_auc_confirm_SOA1.json runs/rewire_cai_sweep_gain0p6_rep/rewire_0p4/seq_auc_confirm_SOA1.json --out_csv runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-& python scripts/plot_paired_deltas.py --csv runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv --out runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.png
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+$base = 'runs/rewire_cai_sweep_gain0p6_rep/rewire_0p0/seq_auc_confirm_SOA1.json'
+$others = @()
+foreach ($w in $Rewires.Split(',')) {
+  if ($w -ne '0.0') {
+    $lbl = $w.Replace('.', 'p')
+    $f = "runs/rewire_cai_sweep_gain0p6_rep/rewire_${lbl}/seq_auc_confirm_SOA1.json"
+    if (Test-Path $f) { $others += $f }
+  }
+}
+if ((Test-Path $base) -and $others.Count -gt 0) {
+  & python scripts/paired_rewire_delta.py --base $base --others $others --out_csv runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv
+  if ($LASTEXITCODE -ne 0) { Write-Host '[warn] paired delta failed' -ForegroundColor Yellow }
+  if (Test-Path 'runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv') {
+    & python scripts/plot_paired_deltas.py --csv runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv --out runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.png
+  }
+} else {
+  Write-Host '[warn] Skipping paired deltas: not enough levels present' -ForegroundColor Yellow
+}
 
 # 3b) Combined panel (best-effort; script lives alongside this bootstrap)
 try {

@@ -51,8 +51,24 @@ echo "==> Running repeated-CV confirm"
 python scripts/rewire_repeated_cv_sweep.py --out runs/rewire_cai_sweep_gain0p6_rep --rewires "$REWIRES" --broadcast_gain "$BROADCAST_GAIN" --repeats "$REPEATS" --B "$B" --R "$R"
 
 echo "==> Computing paired deltas and plotting"
-python scripts/paired_rewire_delta.py --base runs/rewire_cai_sweep_gain0p6_rep/rewire_0p0/seq_auc_confirm_SOA1.json --others runs/rewire_cai_sweep_gain0p6_rep/rewire_0p1/seq_auc_confirm_SOA1.json runs/rewire_cai_sweep_gain0p6_rep/rewire_0p2/seq_auc_confirm_SOA1.json runs/rewire_cai_sweep_gain0p6_rep/rewire_0p3/seq_auc_confirm_SOA1.json runs/rewire_cai_sweep_gain0p6_rep/rewire_0p4/seq_auc_confirm_SOA1.json --out_csv runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv
-python scripts/plot_paired_deltas.py --csv runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv --out runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.png
+# Build dynamic list of 'others' from REWIRES (excluding 0.0) and only include existing files
+OTHERS=()
+IFS=',' read -r -a rw_arr <<< "$REWIRES"
+for w in "${rw_arr[@]}"; do
+  if [ "$w" != "0.0" ]; then
+    lbl=${w//./p}
+    f="runs/rewire_cai_sweep_gain0p6_rep/rewire_${lbl}/seq_auc_confirm_SOA1.json"
+    [ -f "$f" ] && OTHERS+=("$f")
+  fi
+done
+
+BASE="runs/rewire_cai_sweep_gain0p6_rep/rewire_0p0/seq_auc_confirm_SOA1.json"
+if [ -f "$BASE" ] && [ ${#OTHERS[@]} -gt 0 ]; then
+  python scripts/paired_rewire_delta.py --base "$BASE" --others "${OTHERS[@]}" --out_csv runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv || echo "[warn] paired delta failed"
+  [ -f runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv ] && python scripts/plot_paired_deltas.py --csv runs/rewire_cai_sweep_gain0p6_rep/paired_deltas.csv --out runs/rewire_cai_sweep_gain0p6_rep/paired_deltas_plot.png || true
+else
+  echo "[warn] Skipping paired deltas: not enough levels present"
+fi
 
 # 4) Combined recovery panel
 CDIR_ORION="$ROOT_DIR/scripts"
