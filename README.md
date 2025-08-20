@@ -1,6 +1,6 @@
 # DISCOVER 5.0 — Reproduction Kit
 
-![CI](https://github.com/jovanSAPFIONEER/DISCOVER-5.0/actions/workflows/repro.yml/badge.svg)
+![CI (fast)](https://github.com/jovanSAPFIONEER/DISCOVER-5.0/actions/workflows/repro.yml/badge.svg) [![Releases](https://img.shields.io/github/v/release/jovanSAPFIONEER/DISCOVER-5.0)](https://github.com/jovanSAPFIONEER/DISCOVER-5.0/releases)
 
 A minimal, one-command reproduction kit for the DISCOVER/Orion causal rewire result:
 “Lesioning long‑range connectivity eliminates the early access (SOA‑1) signal; restoring it recovers the signal in a graded way.”
