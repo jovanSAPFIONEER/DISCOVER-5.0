@@ -4,7 +4,7 @@
 
 A minimal, one-command reproduction kit for the DISCOVER/Orion causal rewire result:
 “Lesioning long‑range connectivity eliminates the early access (SOA‑1) signal; restoring it recovers the signal in a graded way.”
-
+The numbers that were used in the Reproduction kit was from this repo https://github.com/jovanSAPFIONEER/DISCOVER,
 ## Quick start (Windows PowerShell)
 
 From this repo’s root:
